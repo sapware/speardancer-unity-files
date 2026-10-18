@@ -3,7 +3,8 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 7f;
-    public float jumpForce = 5f;
+    public float crouchSpeed = 3f;
+    public float jumpForce = 3f;
 
     private Rigidbody2D rb;
     private float moveInput;
@@ -28,7 +29,15 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
+        float currentSpeed = moveSpeed;
+
+        // Hold C to crouch
+        if (Input.GetKey(KeyCode.C))
+        {
+            currentSpeed = crouchSpeed;
+        }
+
+        rb.linearVelocity = new Vector2(moveInput * currentSpeed, rb.linearVelocity.y);
     }
 
     void OnCollisionEnter2D(Collision2D collision)
