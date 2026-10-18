@@ -3,10 +3,11 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 7f;
-    public float jumpForce = 2f;
+    public float jumpForce = 3f;
 
     private Rigidbody2D rb;
     private float moveInput;
+    private bool isGrounded = true;
 
     void Awake()
     {
@@ -17,14 +18,21 @@ public class PlayerMovement : MonoBehaviour
     {
         moveInput = Input.GetAxisRaw("Horizontal");
 
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        // Jump
+        if (Input.GetKeyDown(KeyCode.UpArrow) && isGrounded)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+            isGrounded = false;
         }
     }
 
     void FixedUpdate()
     {
         rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        isGrounded = true;
     }
 }
