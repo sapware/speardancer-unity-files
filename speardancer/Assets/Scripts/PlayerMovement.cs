@@ -8,7 +8,8 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody2D rb;
     private float moveInput;
-    private bool isGrounded = true;
+
+    private int jumpsRemaining = 2;
 
     void Awake()
     {
@@ -19,11 +20,11 @@ public class PlayerMovement : MonoBehaviour
     {
         moveInput = Input.GetAxisRaw("Horizontal");
 
-        // Jump
-        if (Input.GetKeyDown(KeyCode.UpArrow) && isGrounded)
+        // Jump and Double Jump
+        if (Input.GetKeyDown(KeyCode.UpArrow) && jumpsRemaining > 0)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
-            isGrounded = false;
+            jumpsRemaining--;
         }
     }
 
@@ -42,6 +43,6 @@ public class PlayerMovement : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        isGrounded = true;
+        jumpsRemaining = 2;
     }
 }
