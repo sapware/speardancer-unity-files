@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     public float boostForce = 12f;
 
     public GameObject spear;
+    public GameObject droppedSpear;
 
     private Rigidbody2D rb;
     private float moveInput;
@@ -25,9 +26,10 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
 
         if (spear != null)
-        {
             spear.SetActive(false);
-        }
+
+        if (droppedSpear != null)
+            droppedSpear.SetActive(false);
     }
 
     void Update()
@@ -40,12 +42,10 @@ public class PlayerMovement : MonoBehaviour
             spearEquipped = !spearEquipped;
 
             if (spear != null)
-            {
                 spear.SetActive(spearEquipped);
-            }
         }
 
-        // Normal Jump
+        // Jump
         if (Input.GetKeyDown(KeyCode.UpArrow) && isGrounded)
         {
             rb.linearVelocity = new Vector2(
@@ -72,12 +72,29 @@ public class PlayerMovement : MonoBehaviour
         isBoosting = true;
         boostAvailable = false;
 
-        // Hover briefly
+        // Remove spear from hand
+        spearEquipped = false;
+
+        if (spear != null)
+            spear.SetActive(false);
+
+        // Spawn planted spear
+        if (droppedSpear != null)
+        {
+            droppedSpear.transform.position =
+                new Vector3(
+                    transform.position.x,
+                    transform.position.y - 1.5f,
+                    0f
+                );
+
+            droppedSpear.SetActive(true);
+        }
+
         rb.linearVelocity = Vector2.zero;
 
         yield return new WaitForSeconds(0.35f);
 
-        // Launch upward
         rb.linearVelocity = new Vector2(
             rb.linearVelocity.x,
             boostForce
