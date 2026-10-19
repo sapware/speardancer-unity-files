@@ -26,13 +26,13 @@ public class PlayerMovement : MonoBehaviour
     [Header("Spear")]
     public GameObject spearInHand;
     public GameObject spearPrefab;
-    public Transform spearSpawnPoint;
 
     private Rigidbody2D rb;
     private bool isGrounded;
     private bool isCrouching;
     private bool spearEquipped = true;
     private bool isBoosting;
+    private bool hasBoostedThisJump;
 
     void Awake()
     {
@@ -43,7 +43,7 @@ public class PlayerMovement : MonoBehaviour
             Debug.LogError("Player needs a Rigidbody2D!");
         }
 
-        // Start with the standing character and hitbox.
+        // Start standing.
         isCrouching = false;
 
         if (standingSprite != null)
@@ -61,6 +61,9 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        if (rb == null)
+            return;
+
         // Check whether the player is touching the ground.
         if (groundCheck != null)
         {
@@ -71,34 +74,50 @@ public class PlayerMovement : MonoBehaviour
             );
         }
 
+        // Reset the spear boost when landing.
+        if (isGrounded)
+        {
+            hasBoostedThisJump = false;
+        }
+
         // Crouching.
         isCrouching = Input.GetKey(KeyCode.C);
 
         UpdateCrouchingSprites();
         UpdateCrouchingHitbox();
 
-        // Jump.
-        if (Input.GetKeyDown(KeyCode.UpArrow) && isGrounded && !isCrouching)
+        // Jump with Up Arrow.
+        if (Input.GetKeyDown(KeyCode.UpArrow)
+            && isGrounded
+            && !isCrouching)
         {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+            rb.linearVelocity = new Vector2(
+                rb.linearVelocity.x,
+                jumpForce
+            );
         }
 
-        // Equip or unequip spear.
+        // Equip or unequip the spear with E.
         if (Input.GetKeyDown(KeyCode.E))
         {
             ToggleSpear();
         }
 
-        // Spear boost while airborne.
-        if (Input.GetKeyDown(KeyCode.Q) && !isGrounded && spearEquipped && !isBoosting)
+        // One spear boost per jump, using Q.
+        if (Input.GetKeyDown(KeyCode.Q)
+            && !isGrounded
+            && spearEquipped
+            && !isBoosting
+            && !hasBoostedThisJump)
         {
+            hasBoostedThisJump = true;
             StartCoroutine(SpearBoost());
         }
     }
 
     void FixedUpdate()
     {
-        if (isBoosting)
+        if (rb == null || isBoosting)
             return;
 
         float horizontalInput = Input.GetAxisRaw("Horizontal");
@@ -144,12 +163,10 @@ public class PlayerMovement : MonoBehaviour
         if (spearInHand != null)
             spearInHand.SetActive(false);
 
-        // Spawn the dropped spear.
+        // Spawn the dropped spear one unit below the player.
         if (spearPrefab != null)
         {
-            Vector3 spawnPosition = spearSpawnPoint != null
-                ? spearSpawnPoint.position
-                : transform.position + Vector3.down;
+            Vector3 spawnPosition = transform.position + Vector3.down;
 
             GameObject droppedSpear = Instantiate(
                 spearPrefab,
@@ -157,23 +174,31 @@ public class PlayerMovement : MonoBehaviour
                 Quaternion.Euler(0f, 0f, 90f)
             );
 
-            // Let the spear hover briefly.
-            Rigidbody2D spearRb = droppedSpear.GetComponent<Rigidbody2D>();
+            // Stop the spear moving during its brief hover.
+            Rigidbody2D spearRb =
+                droppedSpear.GetComponent<Rigidbody2D>();
 
             if (spearRb != null)
+            {
                 spearRb.linearVelocity = Vector2.zero;
-
-            yield return new WaitForSeconds(0.35f);
-
-            // Launch the player upwards.
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, boostForce);
+                spearRb.angularVelocity = 0f;
+                spearRb.bodyType = RigidbodyType2D.Kinematic;
+            }
         }
         else
         {
-            Debug.LogWarning("Spear Prefab has not been assigned!");
-            yield return new WaitForSeconds(0.35f);
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, boostForce);
+            Debug.LogWarning(
+                "Spear Prefab has not been assigned!"
+            );
         }
+
+        // Brief pause before launching upwards.
+        yield return new WaitForSeconds(0.35f);
+
+        rb.linearVelocity = new Vector2(
+            rb.linearVelocity.x,
+            boostForce
+        );
 
         isBoosting = false;
     }
@@ -183,7 +208,10 @@ public class PlayerMovement : MonoBehaviour
         if (groundCheck != null)
         {
             Gizmos.color = Color.green;
-            Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
+            Gizmos.DrawWireSphere(
+                groundCheck.position,
+                groundCheckRadius
+            );
         }
     }
 }
