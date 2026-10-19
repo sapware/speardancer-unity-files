@@ -10,55 +10,41 @@ public class PlayerMovement : MonoBehaviour
     public float jumpForce = 10f;
     public float boostForce = 12f;
 
-    [Header("Character Sprites")]
-    public GameObject standingSprite;
-    public GameObject crouchingSprite;
-
-    [Header("Spear")]
-    public GameObject spear;
-    public GameObject droppedSpearPrefab;
-
-    [Header("Ground Detection")]
+    [Header("Ground Check")]
     public Transform groundCheck;
     public float groundCheckRadius = 0.15f;
     public LayerMask groundLayer;
 
-    [Header("Crouch Hitbox")]
-    public float crouchHeight = 0.8f;
+    [Header("Character Sprites")]
+    public GameObject standingSprite;
+    public GameObject crouchingSprite;
+
+    [Header("Crouching Hitboxes")]
+    public BoxCollider2D standingHitbox;
+    public BoxCollider2D crouchingHitbox;
+
+    [Header("Spear")]
+    public GameObject spearInHand;
+    public GameObject spearPrefab;
+    public Transform spearSpawnPoint;
 
     private Rigidbody2D rb;
-    private CapsuleCollider2D playerCollider;
-
-    private Vector2 standingColliderSize;
-    private Vector2 standingColliderOffset;
-
-    private float moveInput;
-
-    private bool isGrounded = false;
-    private bool boostAvailable = true;
-    private bool isBoosting = false;
-    private bool spearEquipped = false;
-    private bool isCrouching = false;
+    private bool isGrounded;
+    private bool isCrouching;
+    private bool spearEquipped = true;
+    private bool isBoosting;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        playerCollider = GetComponent<CapsuleCollider2D>();
 
         if (rb == null)
-            Debug.LogError("Player is missing Rigidbody2D!");
+        {
+            Debug.LogError("Player needs a Rigidbody2D!");
+        }
 
-        if (playerCollider != null)
-        {
-            standingColliderSize = playerCollider.size;
-            standingColliderOffset = playerCollider.offset;
-        }
-        else
-        {
-            Debug.LogError(
-                "Player needs a CapsuleCollider2D for crouching!"
-            );
-        }
+        // Start with the standing character and hitbox.
+        isCrouching = false;
 
         if (standingSprite != null)
             standingSprite.SetActive(true);
@@ -66,15 +52,16 @@ public class PlayerMovement : MonoBehaviour
         if (crouchingSprite != null)
             crouchingSprite.SetActive(false);
 
-        if (spear != null)
-            spear.SetActive(false);
+        if (standingHitbox != null)
+            standingHitbox.enabled = true;
+
+        if (crouchingHitbox != null)
+            crouchingHitbox.enabled = false;
     }
 
     void Update()
     {
-        moveInput = Input.GetAxisRaw("Horizontal");
-
-        // Ground detection
+        // Check whether the player is touching the ground.
         if (groundCheck != null)
         {
             isGrounded = Physics2D.OverlapCircle(
@@ -84,140 +71,111 @@ public class PlayerMovement : MonoBehaviour
             );
         }
 
-        if (isGrounded)
-            boostAvailable = true;
-
-        // Crouch while holding C
+        // Crouching.
         isCrouching = Input.GetKey(KeyCode.C);
 
-        // Change character appearance
-        if (standingSprite != null)
-            standingSprite.SetActive(!isCrouching);
+        UpdateCrouchingSprites();
+        UpdateCrouchingHitbox();
 
-        if (crouchingSprite != null)
-            crouchingSprite.SetActive(isCrouching);
+        // Jump.
+        if (Input.GetKeyDown(KeyCode.UpArrow) && isGrounded && !isCrouching)
+        {
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+        }
 
-        // Change hitbox
-        UpdateCrouchHitbox();
-
-        // Equip / unequip spear
+        // Equip or unequip spear.
         if (Input.GetKeyDown(KeyCode.E))
         {
-            spearEquipped = !spearEquipped;
-
-            if (spear != null)
-                spear.SetActive(spearEquipped);
+            ToggleSpear();
         }
 
-        // Jump
-        if (Input.GetKeyDown(KeyCode.UpArrow) && isGrounded)
-        {
-            rb.linearVelocity = new Vector2(
-                rb.linearVelocity.x,
-                jumpForce
-            );
-
-            isGrounded = false;
-        }
-
-        // Spear boost
-        if (spearEquipped &&
-            Input.GetKeyDown(KeyCode.Q) &&
-            !isGrounded &&
-            boostAvailable &&
-            !isBoosting)
+        // Spear boost while airborne.
+        if (Input.GetKeyDown(KeyCode.Q) && !isGrounded && spearEquipped && !isBoosting)
         {
             StartCoroutine(SpearBoost());
         }
     }
 
-    void UpdateCrouchHitbox()
+    void FixedUpdate()
     {
-        if (playerCollider == null)
+        if (isBoosting)
             return;
 
-        if (isCrouching)
-        {
-            // Shorten the hitbox while keeping its bottom near the floor
-            float newHeight = Mathf.Clamp(
-                crouchHeight,
-                0.1f,
-                standingColliderSize.y
-            );
+        float horizontalInput = Input.GetAxisRaw("Horizontal");
+        float currentSpeed = isCrouching ? crouchSpeed : moveSpeed;
 
-            playerCollider.size = new Vector2(
-                standingColliderSize.x,
-                newHeight
-            );
+        rb.linearVelocity = new Vector2(
+            horizontalInput * currentSpeed,
+            rb.linearVelocity.y
+        );
+    }
 
-            playerCollider.offset = new Vector2(
-                standingColliderOffset.x,
-                standingColliderOffset.y -
-                (standingColliderSize.y - newHeight) / 2f
-            );
-        }
-        else
-        {
-            // Restore the original hitbox
-            playerCollider.size = standingColliderSize;
-            playerCollider.offset = standingColliderOffset;
-        }
+    void UpdateCrouchingSprites()
+    {
+        if (standingSprite != null)
+            standingSprite.SetActive(!isCrouching);
+
+        if (crouchingSprite != null)
+            crouchingSprite.SetActive(isCrouching);
+    }
+
+    void UpdateCrouchingHitbox()
+    {
+        if (standingHitbox != null)
+            standingHitbox.enabled = !isCrouching;
+
+        if (crouchingHitbox != null)
+            crouchingHitbox.enabled = isCrouching;
+    }
+
+    void ToggleSpear()
+    {
+        spearEquipped = !spearEquipped;
+
+        if (spearInHand != null)
+            spearInHand.SetActive(spearEquipped);
     }
 
     IEnumerator SpearBoost()
     {
         isBoosting = true;
-        boostAvailable = false;
-
         spearEquipped = false;
 
-        if (spear != null)
-            spear.SetActive(false);
+        if (spearInHand != null)
+            spearInHand.SetActive(false);
 
-        // Spawn spear rotated 90 degrees
-        if (droppedSpearPrefab != null)
+        // Spawn the dropped spear.
+        if (spearPrefab != null)
         {
-            Instantiate(
-                droppedSpearPrefab,
-                new Vector3(
-                    transform.position.x,
-                    transform.position.y - 1f,
-                    0f
-                ),
+            Vector3 spawnPosition = spearSpawnPoint != null
+                ? spearSpawnPoint.position
+                : transform.position + Vector3.down;
+
+            GameObject droppedSpear = Instantiate(
+                spearPrefab,
+                spawnPosition,
                 Quaternion.Euler(0f, 0f, 90f)
             );
+
+            // Let the spear hover briefly.
+            Rigidbody2D spearRb = droppedSpear.GetComponent<Rigidbody2D>();
+
+            if (spearRb != null)
+                spearRb.linearVelocity = Vector2.zero;
+
+            yield return new WaitForSeconds(0.35f);
+
+            // Launch the player upwards.
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, boostForce);
         }
-
-        // Brief hover
-        rb.linearVelocity = Vector2.zero;
-
-        yield return new WaitForSeconds(0.35f);
-
-        // Launch upward
-        rb.linearVelocity = new Vector2(
-            rb.linearVelocity.x,
-            boostForce
-        );
+        else
+        {
+            Debug.LogWarning("Spear Prefab has not been assigned!");
+            yield return new WaitForSeconds(0.35f);
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, boostForce);
+        }
 
         isBoosting = false;
-    }
-
-    void FixedUpdate()
-    {
-        if (rb == null)
-            return;
-
-        float currentSpeed = isCrouching
-            ? crouchSpeed
-            : moveSpeed;
-
-        if (!isBoosting)
-        {
-            rb.linearVelocity = new Vector2(
-                moveInput * currentSpeed,
-                rb.linearVelocity.y
-            );
-        }
     }
 
     void OnDrawGizmosSelected()
@@ -225,11 +183,7 @@ public class PlayerMovement : MonoBehaviour
         if (groundCheck != null)
         {
             Gizmos.color = Color.green;
-
-            Gizmos.DrawWireSphere(
-                groundCheck.position,
-                groundCheckRadius
-            );
+            Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
         }
     }
 }
