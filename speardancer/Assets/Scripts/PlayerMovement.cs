@@ -1,3 +1,4 @@
+
 using UnityEngine;
 using System.Collections;
 
@@ -81,7 +82,7 @@ public class PlayerMovement : MonoBehaviour
             spear.SetActive(false);
         }
 
-        // Spawn spear beneath player
+        // Spawn spear beneath player WITHOUT rotation
         if (droppedSpearPrefab != null)
         {
             Instantiate(
@@ -91,7 +92,7 @@ public class PlayerMovement : MonoBehaviour
                     transform.position.y - 1f,
                     0f
                 ),
-                Quaternion.Euler(0f, 0f, -25f)
+                Quaternion.identity
             );
         }
 
@@ -113,11 +114,13 @@ public class PlayerMovement : MonoBehaviour
     {
         float currentSpeed = moveSpeed;
 
+        // Crouch
         if (Input.GetKey(KeyCode.C))
         {
             currentSpeed = crouchSpeed;
         }
 
+        // Horizontal movement
         if (!isBoosting)
         {
             rb.linearVelocity = new Vector2(
