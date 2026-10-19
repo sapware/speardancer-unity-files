@@ -30,6 +30,11 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
 
+        if (rb == null)
+        {
+            Debug.LogError("PlayerMovement: Missing Rigidbody2D!");
+        }
+
         if (spear != null)
         {
             spear.SetActive(false);
@@ -40,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
     {
         moveInput = Input.GetAxisRaw("Horizontal");
 
-        // Detect actual ground beneath the player's feet
+        // Detect ground beneath the player's feet
         if (groundCheck != null)
         {
             isGrounded = Physics2D.OverlapCircle(
@@ -48,9 +53,15 @@ public class PlayerMovement : MonoBehaviour
                 groundCheckRadius,
                 groundLayer
             );
+
+            Debug.Log("Grounded: " + isGrounded);
+        }
+        else
+        {
+            Debug.LogError("GroundCheck has not been assigned!");
         }
 
-        // Reset spear boost when grounded
+        // Reset boost when grounded
         if (isGrounded)
         {
             boostAvailable = true;
@@ -67,15 +78,24 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        // Jump ONLY when actually grounded
-        if (Input.GetKeyDown(KeyCode.UpArrow) && isGrounded)
+        // Jump diagnostic
+        if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            rb.linearVelocity = new Vector2(
-                rb.linearVelocity.x,
-                jumpForce
+            Debug.Log(
+                "Up Arrow pressed! Grounded: " + isGrounded
             );
 
-            isGrounded = false;
+            if (isGrounded)
+            {
+                rb.linearVelocity = new Vector2(
+                    rb.linearVelocity.x,
+                    jumpForce
+                );
+
+                Debug.Log("JUMP ACTIVATED!");
+
+                isGrounded = false;
+            }
         }
 
         // Spear Boost
@@ -102,7 +122,7 @@ public class PlayerMovement : MonoBehaviour
             spear.SetActive(false);
         }
 
-        // Spawn spear beneath player at 90 degrees
+        // Spawn spear beneath player, rotated 90 degrees
         if (droppedSpearPrefab != null)
         {
             Instantiate(
@@ -132,6 +152,11 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (rb == null)
+        {
+            return;
+        }
+
         float currentSpeed = moveSpeed;
 
         // Crouch
@@ -150,12 +175,13 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    // Visualise the ground detection area in the Unity Editor
+    // Draw ground detection circle in the Editor
     void OnDrawGizmosSelected()
     {
         if (groundCheck != null)
         {
             Gizmos.color = Color.green;
+
             Gizmos.DrawWireSphere(
                 groundCheck.position,
                 groundCheckRadius
