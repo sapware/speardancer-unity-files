@@ -82,7 +82,7 @@ public class PlayerMovement : MonoBehaviour
             spear.SetActive(false);
         }
 
-        // Spawn spear beneath player WITHOUT rotation
+        // Spawn spear beneath player, rotated 90 degrees
         if (droppedSpearPrefab != null)
         {
             Instantiate(
@@ -92,7 +92,7 @@ public class PlayerMovement : MonoBehaviour
                     transform.position.y - 1f,
                     0f
                 ),
-                Quaternion.identity
+                Quaternion.Euler(0f, 0f, 90f)
             );
         }
 
