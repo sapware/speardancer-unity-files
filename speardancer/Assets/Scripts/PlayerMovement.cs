@@ -9,6 +9,8 @@ public class PlayerMovement : MonoBehaviour
     public float jumpForce = 10f;
     public float boostForce = 12f;
 
+    public GameObject spear;
+
     private Rigidbody2D rb;
     private float moveInput;
 
@@ -21,6 +23,11 @@ public class PlayerMovement : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+
+        if (spear != null)
+        {
+            spear.SetActive(false);
+        }
     }
 
     void Update()
@@ -32,13 +39,9 @@ public class PlayerMovement : MonoBehaviour
         {
             spearEquipped = !spearEquipped;
 
-            if (spearEquipped)
+            if (spear != null)
             {
-                Debug.Log("Spear Equipped");
-            }
-            else
-            {
-                Debug.Log("Spear Unequipped");
+                spear.SetActive(spearEquipped);
             }
         }
 
