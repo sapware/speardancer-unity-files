@@ -5,8 +5,9 @@ public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 7f;
     public float crouchSpeed = 3f;
-    public float jumpForce = 5f;
-    public float boostForce = 15f;
+
+    public float jumpForce = 10f;
+    public float boostForce = 25f;
 
     private Rigidbody2D rb;
     private float moveInput;
@@ -14,6 +15,8 @@ public class PlayerMovement : MonoBehaviour
     private bool isGrounded = true;
     private bool boostAvailable = true;
     private bool isBoosting = false;
+
+    private bool spearEquipped = false;
 
     void Awake()
     {
@@ -24,36 +27,65 @@ public class PlayerMovement : MonoBehaviour
     {
         moveInput = Input.GetAxisRaw("Horizontal");
 
-        // Normal jump
+        // Equip / Unequip Spear
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            spearEquipped = !spearEquipped;
+
+            if (spearEquipped)
+            {
+                Debug.Log("Spear Equipped");
+            }
+            else
+            {
+                Debug.Log("Spear Unequipped");
+            }
+        }
+
+        // Normal Jump
         if (Input.GetKeyDown(KeyCode.UpArrow) && isGrounded)
         {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+            rb.linearVelocity = new Vector2(
+                rb.linearVelocity.x,
+                jumpForce
+            );
+
             isGrounded = false;
         }
 
-        // Mid-air boost
-        if (Input.GetKeyDown(KeyCode.Q) && !isGrounded && boostAvailable && !isBoosting)
+        // Spear Boost
+        if (spearEquipped &&
+            Input.GetKeyDown(KeyCode.Q) &&
+            !isGrounded &&
+            boostAvailable &&
+            !isBoosting)
         {
-            StartCoroutine(BoostJump());
+            StartCoroutine(SpearBoost());
         }
     }
 
-    IEnumerator BoostJump()
+    IEnumerator SpearBoost()
     {
         isBoosting = true;
         boostAvailable = false;
 
-        // Freeze in air
-        rb.gravityScale = 0;
         rb.linearVelocity = Vector2.zero;
 
-        yield return new WaitForSeconds(1f);
+        RigidbodyConstraints2D oldConstraints = rb.constraints;
 
-        // Restore gravity
-        rb.gravityScale = 3;
+        rb.constraints =
+            RigidbodyConstraints2D.FreezePositionX |
+            RigidbodyConstraints2D.FreezePositionY |
+            RigidbodyConstraints2D.FreezeRotation;
 
-        // Launch upward
-        rb.linearVelocity = new Vector2(0, boostForce);
+        yield return new WaitForSeconds(0.35f);
+
+        rb.constraints = oldConstraints;
+
+        rb.linearVelocity = new Vector2(
+            0f,
+            boostForce
+        );
 
         isBoosting = false;
     }
