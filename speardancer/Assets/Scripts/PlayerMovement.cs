@@ -17,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Spear")]
     public GameObject spearInHand;
     public GameObject spearPrefab;
+    public float spearThrowSpeed = 15f;
 
     private Rigidbody2D rb;
     private bool isGrounded;
@@ -29,9 +30,10 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
 
         if (rb == null)
-        {
             Debug.LogError("Player needs a Rigidbody2D!");
-        }
+
+        if (spearInHand != null)
+            spearInHand.SetActive(true);
     }
 
     void Update()
@@ -39,7 +41,6 @@ public class PlayerMovement : MonoBehaviour
         if (rb == null)
             return;
 
-        // Check whether the player is touching the ground.
         if (groundCheck != null)
         {
             isGrounded = Physics2D.OverlapCircle(
@@ -49,13 +50,10 @@ public class PlayerMovement : MonoBehaviour
             );
         }
 
-        // Allow another spear boost after landing.
         if (isGrounded)
-        {
             hasBoostedThisJump = false;
-        }
 
-        // Jump using Up Arrow.
+        // Jump.
         if (Input.GetKeyDown(KeyCode.UpArrow) && isGrounded)
         {
             rb.linearVelocity = new Vector2(
@@ -64,13 +62,25 @@ public class PlayerMovement : MonoBehaviour
             );
         }
 
-        // Equip or unequip spear using E.
+        // Equip or unequip.
         if (Input.GetKeyDown(KeyCode.E))
-        {
             ToggleSpear();
+
+        // Debug and throw spear using R.
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Debug.Log("R key detected!");
+            Debug.Log("Spear equipped: " + spearEquipped);
+            Debug.Log("Is boosting: " + isBoosting);
+            Debug.Log(
+                "Spear prefab assigned: " + (spearPrefab != null)
+            );
+
+            if (spearEquipped && !isBoosting)
+                ThrowSpear(Vector2.right);
         }
 
-        // One spear boost per jump using Q.
+        // One spear boost per jump.
         if (Input.GetKeyDown(KeyCode.Q)
             && !isGrounded
             && spearEquipped
@@ -100,9 +110,49 @@ public class PlayerMovement : MonoBehaviour
         spearEquipped = !spearEquipped;
 
         if (spearInHand != null)
-        {
             spearInHand.SetActive(spearEquipped);
+    }
+
+    void ThrowSpear(Vector2 direction)
+    {
+        if (spearPrefab == null)
+        {
+            Debug.LogWarning("Assign the Spear Prefab!");
+            return;
         }
+
+        Vector3 spawnPosition =
+            transform.position + (Vector3)(direction * 0.8f);
+
+        GameObject thrownSpear = Instantiate(
+            spearPrefab,
+            spawnPosition,
+            Quaternion.Euler(
+                0f,
+                0f,
+                direction.x > 0 ? 90f : -90f
+            )
+        );
+
+        SpearProjectile projectile =
+            thrownSpear.GetComponent<SpearProjectile>();
+
+        if (projectile != null)
+        {
+            projectile.Launch(direction, spearThrowSpeed);
+        }
+        else
+        {
+            Debug.LogError(
+                "Your Spear Prefab needs a SpearProjectile component!"
+            );
+        }
+
+        // Hide the held spear after throwing.
+        spearEquipped = false;
+
+        if (spearInHand != null)
+            spearInHand.SetActive(false);
     }
 
     IEnumerator SpearBoost()
@@ -111,14 +161,12 @@ public class PlayerMovement : MonoBehaviour
         spearEquipped = false;
 
         if (spearInHand != null)
-        {
             spearInHand.SetActive(false);
-        }
 
-        // Spawn the dropped spear below the player.
         if (spearPrefab != null)
         {
-            Vector3 spawnPosition = transform.position + Vector3.down;
+            Vector3 spawnPosition =
+                transform.position + Vector3.down;
 
             GameObject droppedSpear = Instantiate(
                 spearPrefab,
@@ -126,7 +174,6 @@ public class PlayerMovement : MonoBehaviour
                 Quaternion.Euler(0f, 0f, 90f)
             );
 
-            // Keep the spear stationary during the hover.
             Rigidbody2D spearRb =
                 droppedSpear.GetComponent<Rigidbody2D>();
 
@@ -139,10 +186,9 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("Spear Prefab has not been assigned!");
+            Debug.LogWarning("Assign the Spear Prefab!");
         }
 
-        // Wait before launching the player.
         yield return new WaitForSeconds(0.35f);
 
         rb.linearVelocity = new Vector2(
