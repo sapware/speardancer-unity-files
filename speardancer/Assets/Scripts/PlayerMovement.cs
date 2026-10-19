@@ -19,11 +19,19 @@ public class PlayerMovement : MonoBehaviour
     public GameObject spearPrefab;
     public float spearThrowSpeed = 15f;
 
+    [Header("Spear Grapple")]
+    public float pullSpeed = 12f;
+    public float pullStopDistance = 0.8f;
+
     private Rigidbody2D rb;
     private bool isGrounded;
     private bool spearEquipped = true;
     private bool isBoosting;
     private bool hasBoostedThisJump;
+    private bool isPulling;
+
+    private SpearProjectile activeThrownSpear;
+    private KeyCode grappleKey;
 
     void Awake()
     {
@@ -62,25 +70,34 @@ public class PlayerMovement : MonoBehaviour
             );
         }
 
-        // Equip or unequip.
+        // Equip or unequip spear.
         if (Input.GetKeyDown(KeyCode.E))
             ToggleSpear();
 
-        // Debug and throw spear using R.
-        if (Input.GetKeyDown(KeyCode.R))
+        // Throw to the right with X.
+        if (Input.GetKeyDown(KeyCode.X)
+            && spearEquipped
+            && !isBoosting)
         {
-            Debug.Log("R key detected!");
-            Debug.Log("Spear equipped: " + spearEquipped);
-            Debug.Log("Is boosting: " + isBoosting);
-            Debug.Log(
-                "Spear prefab assigned: " + (spearPrefab != null)
-            );
-
-            if (spearEquipped && !isBoosting)
-                ThrowSpear(Vector2.right);
+            ThrowSpear(Vector2.right, KeyCode.X);
         }
 
-        // One spear boost per jump.
+        // Throw to the left with Z.
+        if (Input.GetKeyDown(KeyCode.Z)
+            && spearEquipped
+            && !isBoosting)
+        {
+            ThrowSpear(Vector2.left, KeyCode.Z);
+        }
+
+        // Grapple only while holding the matching throw key.
+        isPulling =
+            activeThrownSpear != null
+            && activeThrownSpear.IsStuck
+            && Input.GetKey(grappleKey)
+            && !isBoosting;
+
+        // One spear boost per jump with Q.
         if (Input.GetKeyDown(KeyCode.Q)
             && !isGrounded
             && spearEquipped
@@ -97,6 +114,26 @@ public class PlayerMovement : MonoBehaviour
         if (rb == null || isBoosting)
             return;
 
+        // Pull towards the stuck spear.
+        if (isPulling && activeThrownSpear != null)
+        {
+            Vector2 targetPosition =
+                activeThrownSpear.transform.position;
+
+            Vector2 toSpear = targetPosition - rb.position;
+
+            if (toSpear.magnitude <= pullStopDistance)
+            {
+                rb.linearVelocity = Vector2.zero;
+                isPulling = false;
+                return;
+            }
+
+            rb.linearVelocity = toSpear.normalized * pullSpeed;
+            return;
+        }
+
+        // Normal horizontal movement.
         float horizontalInput = Input.GetAxisRaw("Horizontal");
 
         rb.linearVelocity = new Vector2(
@@ -113,7 +150,7 @@ public class PlayerMovement : MonoBehaviour
             spearInHand.SetActive(spearEquipped);
     }
 
-    void ThrowSpear(Vector2 direction)
+    void ThrowSpear(Vector2 direction, KeyCode pullKey)
     {
         if (spearPrefab == null)
         {
@@ -127,26 +164,26 @@ public class PlayerMovement : MonoBehaviour
         GameObject thrownSpear = Instantiate(
             spearPrefab,
             spawnPosition,
-            Quaternion.Euler(
-                0f,
-                0f,
-                direction.x > 0 ? 90f : -90f
-            )
+            Quaternion.identity
         );
 
         SpearProjectile projectile =
             thrownSpear.GetComponent<SpearProjectile>();
 
-        if (projectile != null)
-        {
-            projectile.Launch(direction, spearThrowSpeed);
-        }
-        else
+        if (projectile == null)
         {
             Debug.LogError(
-                "Your Spear Prefab needs a SpearProjectile component!"
+                "The spear prefab needs a SpearProjectile component!"
             );
+
+            Destroy(thrownSpear);
+            return;
         }
+
+        projectile.Launch(direction, spearThrowSpeed);
+
+        activeThrownSpear = projectile;
+        grappleKey = pullKey;
 
         // Hide the held spear after throwing.
         spearEquipped = false;
@@ -158,6 +195,7 @@ public class PlayerMovement : MonoBehaviour
     IEnumerator SpearBoost()
     {
         isBoosting = true;
+        isPulling = false;
         spearEquipped = false;
 
         if (spearInHand != null)
