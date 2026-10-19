@@ -10,7 +10,7 @@ public class PlayerMovement : MonoBehaviour
     public float boostForce = 12f;
 
     public GameObject spear;
-    public GameObject droppedSpear;
+    public GameObject droppedSpearPrefab;
 
     private Rigidbody2D rb;
     private float moveInput;
@@ -26,10 +26,9 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
 
         if (spear != null)
+        {
             spear.SetActive(false);
-
-        if (droppedSpear != null)
-            droppedSpear.SetActive(false);
+        }
     }
 
     void Update()
@@ -42,7 +41,9 @@ public class PlayerMovement : MonoBehaviour
             spearEquipped = !spearEquipped;
 
             if (spear != null)
+            {
                 spear.SetActive(spearEquipped);
+            }
         }
 
         // Jump
@@ -76,25 +77,30 @@ public class PlayerMovement : MonoBehaviour
         spearEquipped = false;
 
         if (spear != null)
-            spear.SetActive(false);
-
-        // Spawn planted spear
-        if (droppedSpear != null)
         {
-            droppedSpear.transform.position =
-                new Vector3(
-                    transform.position.x,
-                    transform.position.y - 1.5f,
-                    0f
-                );
-
-            droppedSpear.SetActive(true);
+            spear.SetActive(false);
         }
 
+        // Spawn spear beneath player
+        if (droppedSpearPrefab != null)
+        {
+            Instantiate(
+                droppedSpearPrefab,
+                new Vector3(
+                    transform.position.x,
+                    transform.position.y - 1f,
+                    0f
+                ),
+                Quaternion.Euler(0f, 0f, -25f)
+            );
+        }
+
+        // Brief hover
         rb.linearVelocity = Vector2.zero;
 
         yield return new WaitForSeconds(0.35f);
 
+        // Launch upward
         rb.linearVelocity = new Vector2(
             rb.linearVelocity.x,
             boostForce
