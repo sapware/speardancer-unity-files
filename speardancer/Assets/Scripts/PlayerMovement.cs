@@ -4,12 +4,17 @@ using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [Header("Movement")]
     public float moveSpeed = 7f;
     public float crouchSpeed = 3f;
-
     public float jumpForce = 10f;
     public float boostForce = 12f;
 
+    [Header("Character Sprites")]
+    public GameObject standingSprite;
+    public GameObject crouchingSprite;
+
+    [Header("Spear")]
     public GameObject spear;
     public GameObject droppedSpearPrefab;
 
@@ -25,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
     private bool boostAvailable = true;
     private bool isBoosting = false;
     private bool spearEquipped = false;
+    private bool isCrouching = false;
 
     void Awake()
     {
@@ -32,20 +38,24 @@ public class PlayerMovement : MonoBehaviour
 
         if (rb == null)
         {
-            Debug.LogError("PlayerMovement: Missing Rigidbody2D!");
+            Debug.LogError("Player is missing Rigidbody2D!");
         }
 
+        if (standingSprite != null)
+            standingSprite.SetActive(true);
+
+        if (crouchingSprite != null)
+            crouchingSprite.SetActive(false);
+
         if (spear != null)
-        {
             spear.SetActive(false);
-        }
     }
 
     void Update()
     {
         moveInput = Input.GetAxisRaw("Horizontal");
 
-        // Detect ground beneath the player's feet
+        // Ground detection
         if (groundCheck != null)
         {
             isGrounded = Physics2D.OverlapCircle(
@@ -53,52 +63,41 @@ public class PlayerMovement : MonoBehaviour
                 groundCheckRadius,
                 groundLayer
             );
-
-            Debug.Log("Grounded: " + isGrounded);
-        }
-        else
-        {
-            Debug.LogError("GroundCheck has not been assigned!");
         }
 
-        // Reset boost when grounded
         if (isGrounded)
-        {
             boostAvailable = true;
-        }
 
-        // Equip / Unequip Spear
+        // Crouch: hold C
+        isCrouching = Input.GetKey(KeyCode.C);
+
+        if (standingSprite != null)
+            standingSprite.SetActive(!isCrouching);
+
+        if (crouchingSprite != null)
+            crouchingSprite.SetActive(isCrouching);
+
+        // Equip / unequip spear
         if (Input.GetKeyDown(KeyCode.E))
         {
             spearEquipped = !spearEquipped;
 
             if (spear != null)
-            {
                 spear.SetActive(spearEquipped);
-            }
         }
 
-        // Jump diagnostic
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        // Jump
+        if (Input.GetKeyDown(KeyCode.UpArrow) && isGrounded)
         {
-            Debug.Log(
-                "Up Arrow pressed! Grounded: " + isGrounded
+            rb.linearVelocity = new Vector2(
+                rb.linearVelocity.x,
+                jumpForce
             );
 
-            if (isGrounded)
-            {
-                rb.linearVelocity = new Vector2(
-                    rb.linearVelocity.x,
-                    jumpForce
-                );
-
-                Debug.Log("JUMP ACTIVATED!");
-
-                isGrounded = false;
-            }
+            isGrounded = false;
         }
 
-        // Spear Boost
+        // Spear boost
         if (spearEquipped &&
             Input.GetKeyDown(KeyCode.Q) &&
             !isGrounded &&
@@ -114,15 +113,12 @@ public class PlayerMovement : MonoBehaviour
         isBoosting = true;
         boostAvailable = false;
 
-        // Remove spear from hand
         spearEquipped = false;
 
         if (spear != null)
-        {
             spear.SetActive(false);
-        }
 
-        // Spawn spear beneath player, rotated 90 degrees
+        // Spawn spear rotated 90 degrees
         if (droppedSpearPrefab != null)
         {
             Instantiate(
@@ -153,19 +149,12 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate()
     {
         if (rb == null)
-        {
             return;
-        }
 
-        float currentSpeed = moveSpeed;
+        float currentSpeed = isCrouching
+            ? crouchSpeed
+            : moveSpeed;
 
-        // Crouch
-        if (Input.GetKey(KeyCode.C))
-        {
-            currentSpeed = crouchSpeed;
-        }
-
-        // Horizontal movement
         if (!isBoosting)
         {
             rb.linearVelocity = new Vector2(
@@ -175,7 +164,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    // Draw ground detection circle in the Editor
     void OnDrawGizmosSelected()
     {
         if (groundCheck != null)
