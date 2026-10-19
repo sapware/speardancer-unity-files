@@ -13,13 +13,17 @@ public class PlayerMovement : MonoBehaviour
     public GameObject spear;
     public GameObject droppedSpearPrefab;
 
+    [Header("Ground Detection")]
+    public Transform groundCheck;
+    public float groundCheckRadius = 0.15f;
+    public LayerMask groundLayer;
+
     private Rigidbody2D rb;
     private float moveInput;
 
-    private bool isGrounded = true;
+    private bool isGrounded = false;
     private bool boostAvailable = true;
     private bool isBoosting = false;
-
     private bool spearEquipped = false;
 
     void Awake()
@@ -36,6 +40,22 @@ public class PlayerMovement : MonoBehaviour
     {
         moveInput = Input.GetAxisRaw("Horizontal");
 
+        // Detect actual ground beneath the player's feet
+        if (groundCheck != null)
+        {
+            isGrounded = Physics2D.OverlapCircle(
+                groundCheck.position,
+                groundCheckRadius,
+                groundLayer
+            );
+        }
+
+        // Reset spear boost when grounded
+        if (isGrounded)
+        {
+            boostAvailable = true;
+        }
+
         // Equip / Unequip Spear
         if (Input.GetKeyDown(KeyCode.E))
         {
@@ -47,7 +67,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        // Jump
+        // Jump ONLY when actually grounded
         if (Input.GetKeyDown(KeyCode.UpArrow) && isGrounded)
         {
             rb.linearVelocity = new Vector2(
@@ -82,7 +102,7 @@ public class PlayerMovement : MonoBehaviour
             spear.SetActive(false);
         }
 
-        // Spawn spear beneath player, rotated 90 degrees
+        // Spawn spear beneath player at 90 degrees
         if (droppedSpearPrefab != null)
         {
             Instantiate(
@@ -130,14 +150,16 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    // Visualise the ground detection area in the Unity Editor
+    void OnDrawGizmosSelected()
     {
-        isGrounded = true;
-        boostAvailable = true;
-    }
-
-    void OnCollisionExit2D(Collision2D collision)
-    {
-        isGrounded = false;
+        if (groundCheck != null)
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireSphere(
+                groundCheck.position,
+                groundCheckRadius
+            );
+        }
     }
 }
