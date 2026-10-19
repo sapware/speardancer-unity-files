@@ -1,0 +1,561 @@
+fileFormatVersion: 2
+guid: 6102666cc78304c52aab4b2d859de685
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 2738712751406845999
+    second: pixel-art-single-grass-platform-game-floating-floating-pixel-style-png_0
+  - first:
+      213: 8264691201365981046
+    second: pixel-art-single-grass-platform-game-floating-floating-pixel-style-png_1
+  - first:
+      213: -7624159293889556794
+    second: pixel-art-single-grass-platform-game-floating-floating-pixel-style-png_2
+  - first:
+      213: -5170440441443203440
+    second: pixel-art-single-grass-platform-game-floating-floating-pixel-style-png_3
+  - first:
+      213: 7118331316945342776
+    second: pixel-art-single-grass-platform-game-floating-floating-pixel-style-png_4
+  - first:
+      213: 6403806946660094190
+    second: pixel-art-single-grass-platform-game-floating-floating-pixel-style-png_5
+  - first:
+      213: -5364866470631785659
+    second: pixel-art-single-grass-platform-game-floating-floating-pixel-style-png_6
+  - first:
+      213: -818368877738798611
+    second: pixel-art-single-grass-platform-game-floating-floating-pixel-style-png_7
+  - first:
+      213: 6887255961113668224
+    second: pixel-art-single-grass-platform-game-floating-floating-pixel-style-png_8
+  - first:
+      213: 5663894522029488204
+    second: pixel-art-single-grass-platform-game-floating-floating-pixel-style-png_9
+  - first:
+      213: -2806300683719381538
+    second: pixel-art-single-grass-platform-game-floating-floating-pixel-style-png_10
+  - first:
+      213: 6991626330966007206
+    second: pixel-art-single-grass-platform-game-floating-floating-pixel-style-png_11
+  - first:
+      213: 6673061930817531654
+    second: pixel-art-single-grass-platform-game-floating-floating-pixel-style-png_12
+  - first:
+      213: 2489329100566508194
+    second: pixel-art-single-grass-platform-game-floating-floating-pixel-style-png_13
+  - first:
+      213: 9163000130815639486
+    second: pixel-art-single-grass-platform-game-floating-floating-pixel-style-png_14
+  - first:
+      213: -1215962399499975877
+    second: pixel-art-single-grass-platform-game-floating-floating-pixel-style-png_15
+  - first:
+      213: 787531458162164054
+    second: pixel-art-single-grass-platform-game-floating-floating-pixel-style-png_16
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: pixel-art-single-grass-platform-game-floating-floating-pixel-style-png_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 940
+        width: 179
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f201071bcbcd10620800000000000000
+      internalID: 2738712751406845999
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel-art-single-grass-platform-game-floating-floating-pixel-style-png_1
+      rect:
+        serializedVersion: 2
+        x: 358
+        y: 929
+        width: 101
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 67737b30cd412b270800000000000000
+      internalID: 8264691201365981046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel-art-single-grass-platform-game-floating-floating-pixel-style-png_2
+      rect:
+        serializedVersion: 2
+        x: 468
+        y: 940
+        width: 253
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ce48b8448b813690800000000000000
+      internalID: -7624159293889556794
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel-art-single-grass-platform-game-floating-floating-pixel-style-png_3
+      rect:
+        serializedVersion: 2
+        x: 901
+        y: 929
+        width: 79
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 096c67b00d7ee38b0800000000000000
+      internalID: -5170440441443203440
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel-art-single-grass-platform-game-floating-floating-pixel-style-png_4
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 695
+        width: 101
+        height: 101
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 831d0144e9469c260800000000000000
+      internalID: 7118331316945342776
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel-art-single-grass-platform-game-floating-floating-pixel-style-png_5
+      rect:
+        serializedVersion: 2
+        x: 190
+        y: 707
+        width: 265
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee09ad93d74eed850800000000000000
+      internalID: 6403806946660094190
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel-art-single-grass-platform-game-floating-floating-pixel-style-png_6
+      rect:
+        serializedVersion: 2
+        x: 630
+        y: 695
+        width: 100
+        height: 101
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 54bb6968e5a2c85b0800000000000000
+      internalID: -5364866470631785659
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel-art-single-grass-platform-game-floating-floating-pixel-style-png_7
+      rect:
+        serializedVersion: 2
+        x: 733
+        y: 707
+        width: 247
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de1d42377d194a4f0800000000000000
+      internalID: -818368877738798611
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel-art-single-grass-platform-game-floating-floating-pixel-style-png_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 345
+        width: 980
+        height: 290
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 08a2f5f6ec2749f50800000000000000
+      internalID: 6887255961113668224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel-art-single-grass-platform-game-floating-floating-pixel-style-png_9
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 228
+        width: 101
+        height: 101
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4839d62f023a9e40800000000000000
+      internalID: 5663894522029488204
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel-art-single-grass-platform-game-floating-floating-pixel-style-png_10
+      rect:
+        serializedVersion: 2
+        x: 190
+        y: 240
+        width: 265
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: edd68f585640e09d0800000000000000
+      internalID: -2806300683719381538
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel-art-single-grass-platform-game-floating-floating-pixel-style-png_11
+      rect:
+        serializedVersion: 2
+        x: 630
+        y: 228
+        width: 100
+        height: 101
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ad1f73da1f370160800000000000000
+      internalID: 6991626330966007206
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel-art-single-grass-platform-game-floating-floating-pixel-style-png_12
+      rect:
+        serializedVersion: 2
+        x: 733
+        y: 240
+        width: 247
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 60faf8e787a7b9c50800000000000000
+      internalID: 6673061930817531654
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel-art-single-grass-platform-game-floating-floating-pixel-style-png_13
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 6
+        width: 183
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a23f40c0afdb8220800000000000000
+      internalID: 2489329100566508194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel-art-single-grass-platform-game-floating-floating-pixel-style-png_14
+      rect:
+        serializedVersion: 2
+        x: 358
+        y: 0
+        width: 101
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ebfbf124214892f70800000000000000
+      internalID: 9163000130815639486
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel-art-single-grass-platform-game-floating-floating-pixel-style-png_15
+      rect:
+        serializedVersion: 2
+        x: 461
+        y: 6
+        width: 265
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b33829dd3a8002fe0800000000000000
+      internalID: -1215962399499975877
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel-art-single-grass-platform-game-floating-floating-pixel-style-png_16
+      rect:
+        serializedVersion: 2
+        x: 901
+        y: 0
+        width: 79
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 651833d40bfddea00800000000000000
+      internalID: 787531458162164054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      pixel-art-single-grass-platform-game-floating-floating-pixel-style-png_0: 2738712751406845999
+      pixel-art-single-grass-platform-game-floating-floating-pixel-style-png_1: 8264691201365981046
+      pixel-art-single-grass-platform-game-floating-floating-pixel-style-png_10: -2806300683719381538
+      pixel-art-single-grass-platform-game-floating-floating-pixel-style-png_11: 6991626330966007206
+      pixel-art-single-grass-platform-game-floating-floating-pixel-style-png_12: 6673061930817531654
+      pixel-art-single-grass-platform-game-floating-floating-pixel-style-png_13: 2489329100566508194
+      pixel-art-single-grass-platform-game-floating-floating-pixel-style-png_14: 9163000130815639486
+      pixel-art-single-grass-platform-game-floating-floating-pixel-style-png_15: -1215962399499975877
+      pixel-art-single-grass-platform-game-floating-floating-pixel-style-png_16: 787531458162164054
+      pixel-art-single-grass-platform-game-floating-floating-pixel-style-png_2: -7624159293889556794
+      pixel-art-single-grass-platform-game-floating-floating-pixel-style-png_3: -5170440441443203440
+      pixel-art-single-grass-platform-game-floating-floating-pixel-style-png_4: 7118331316945342776
+      pixel-art-single-grass-platform-game-floating-floating-pixel-style-png_5: 6403806946660094190
+      pixel-art-single-grass-platform-game-floating-floating-pixel-style-png_6: -5364866470631785659
+      pixel-art-single-grass-platform-game-floating-floating-pixel-style-png_7: -818368877738798611
+      pixel-art-single-grass-platform-game-floating-floating-pixel-style-png_8: 6887255961113668224
+      pixel-art-single-grass-platform-game-floating-floating-pixel-style-png_9: 5663894522029488204
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
