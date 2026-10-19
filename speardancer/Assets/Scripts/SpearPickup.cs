@@ -15,12 +15,10 @@ public class SpearPickup : MonoBehaviour
 
     IEnumerator EnablePickupAfterDelay()
     {
-        // Prevent the player from collecting the spear immediately.
         canBeCollected = false;
 
         yield return new WaitForSeconds(pickupDelay);
 
-        // The spear can now be collected.
         canBeCollected = true;
     }
 
