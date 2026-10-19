@@ -27,19 +27,15 @@ public class PlayerMovement : MonoBehaviour
     {
         moveInput = Input.GetAxisRaw("Horizontal");
 
-        // Equip / Unequip Spear
+        // Equip/Unequip Spear
         if (Input.GetKeyDown(KeyCode.E))
         {
             spearEquipped = !spearEquipped;
 
             if (spearEquipped)
-            {
                 Debug.Log("Spear Equipped");
-            }
             else
-            {
                 Debug.Log("Spear Unequipped");
-            }
         }
 
         // Normal Jump
@@ -49,8 +45,6 @@ public class PlayerMovement : MonoBehaviour
                 rb.linearVelocity.x,
                 jumpForce
             );
-
-            isGrounded = false;
         }
 
         // Spear Boost
@@ -69,21 +63,20 @@ public class PlayerMovement : MonoBehaviour
         isBoosting = true;
         boostAvailable = false;
 
+        float originalGravity = rb.gravityScale;
+
+        // Hover in air
         rb.linearVelocity = Vector2.zero;
-
-        RigidbodyConstraints2D oldConstraints = rb.constraints;
-
-        rb.constraints =
-            RigidbodyConstraints2D.FreezePositionX |
-            RigidbodyConstraints2D.FreezePositionY |
-            RigidbodyConstraints2D.FreezeRotation;
+        rb.gravityScale = 0f;
 
         yield return new WaitForSeconds(0.35f);
 
-        rb.constraints = oldConstraints;
+        // Bring gravity back
+        rb.gravityScale = originalGravity;
 
+        // Launch player upward
         rb.linearVelocity = new Vector2(
-            0f,
+            rb.linearVelocity.x,
             boostForce
         );
 
