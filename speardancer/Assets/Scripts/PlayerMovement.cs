@@ -9,6 +9,9 @@ public class PlayerMovement : MonoBehaviour
     public float jumpForce = 10f;
     public float boostForce = 12f;
 
+    [Header("Player Appearance")]
+    public Sprite playerSprite;
+
     [Header("Ground Check")]
     public Transform groundCheck;
     public float groundCheckRadius = 0.15f;
@@ -42,6 +45,13 @@ public class PlayerMovement : MonoBehaviour
 
         if (spearInHand != null)
             spearInHand.SetActive(true);
+
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+
+        if (sr != null && playerSprite != null)
+        {
+            sr.sprite = playerSprite;
+        }
     }
 
     void Update()
@@ -62,7 +72,7 @@ public class PlayerMovement : MonoBehaviour
             hasBoostedThisJump = false;
 
         // Jump.
-        if (Input.GetKeyDown(KeyCode.UpArrow) && isGrounded)
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             rb.linearVelocity = new Vector2(
                 rb.linearVelocity.x,
