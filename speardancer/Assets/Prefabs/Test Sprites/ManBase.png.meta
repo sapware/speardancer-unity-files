@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 46c4bd0e86c8745e997fe04c1bfebdd4
+guid: 4df724d84005442489baeae0be670be8
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4296193443984631328
-    second: Bush_0
+      213: -8721216999491214258
+    second: ManBase_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -102,13 +102,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Bush_0
+      name: ManBase_0
       rect:
         serializedVersion: 2
-        x: 443
-        y: 357
-        width: 1358
-        height: 873
+        x: 9
+        y: 3
+        width: 13
+        height: 26
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -117,8 +117,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 026e013dc252f9b30800000000000000
-      internalID: 4296193443984631328
+      spriteID: e446a30985308f680800000000000000
+      internalID: -8721216999491214258
       vertices: []
       indices: 
       edges: []
@@ -137,7 +137,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Bush_0: 4296193443984631328
+      ManBase_0: -8721216999491214258
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
