@@ -72,7 +72,7 @@ public class PlayerMovement : MonoBehaviour
             hasBoostedThisJump = false;
 
         // Jump.
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        if (Input.GetKeyDown(KeyCode.UpArrow) && isGrounded)
         {
             rb.linearVelocity = new Vector2(
                 rb.linearVelocity.x,
