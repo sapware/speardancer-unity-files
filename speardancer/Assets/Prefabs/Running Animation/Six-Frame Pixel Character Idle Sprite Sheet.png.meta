@@ -1,0 +1,334 @@
+fileFormatVersion: 2
+guid: 2f51663d29bed4eacaf32de6762136d9
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 3140060257943533426
+    second: Six-Frame Pixel Character Idle Sprite Sheet_0
+  - first:
+      213: -9052101103412148694
+    second: Six-Frame Pixel Character Idle Sprite Sheet_1
+  - first:
+      213: -6027853269414022530
+    second: Six-Frame Pixel Character Idle Sprite Sheet_2
+  - first:
+      213: 742962116826740014
+    second: Six-Frame Pixel Character Idle Sprite Sheet_3
+  - first:
+      213: 1999602338953581685
+    second: Six-Frame Pixel Character Idle Sprite Sheet_4
+  - first:
+      213: 4164164330737632580
+    second: Six-Frame Pixel Character Idle Sprite Sheet_5
+  - first:
+      213: 3477112174604251928
+    second: Six-Frame Pixel Character Idle Sprite Sheet_6
+  - first:
+      213: 2104522925114694180
+    second: Six-Frame Pixel Character Idle Sprite Sheet_7
+  - first:
+      213: 8003970330927910868
+    second: Six-Frame Pixel Character Idle Sprite Sheet_8
+  - first:
+      213: 2973292820109280434
+    second: Six-Frame Pixel Character Idle Sprite Sheet_9
+  - first:
+      213: -6488383984197625258
+    second: Six-Frame Pixel Character Idle Sprite Sheet_10
+  - first:
+      213: -122315869781358065
+    second: Six-Frame Pixel Character Idle Sprite Sheet_11
+  - first:
+      213: 6019080687931058043
+    second: Six-Frame Pixel Character Idle Sprite Sheet_12
+  - first:
+      213: -1156030532514065380
+    second: Six-Frame Pixel Character Idle Sprite Sheet_13
+  - first:
+      213: 4178227138814898300
+    second: Six-Frame Pixel Character Idle Sprite Sheet_14
+  - first:
+      213: -9103112517928437682
+    second: Six-Frame Pixel Character Idle Sprite Sheet_15
+  - first:
+      213: 2575458909893590602
+    second: Six-Frame Pixel Character Idle Sprite Sheet_16
+  - first:
+      213: -3408530484952597288
+    second: Six-Frame Pixel Character Idle Sprite Sheet_17
+  - first:
+      213: 4558524981419919603
+    second: Six-Frame Pixel Character Idle Sprite Sheet_18
+  - first:
+      213: -5750605239793818762
+    second: Six-Frame Pixel Character Idle Sprite Sheet_19
+  - first:
+      213: -8013329231283304801
+    second: Six-Frame Pixel Character Idle Sprite Sheet_20
+  - first:
+      213: -6266420486456482018
+    second: Six-Frame Pixel Character Idle Sprite Sheet_21
+  - first:
+      213: -6690439974824561551
+    second: Six-Frame Pixel Character Idle Sprite Sheet_22
+  - first:
+      213: 6029362378651802046
+    second: Six-Frame Pixel Character Idle Sprite Sheet_23
+  - first:
+      213: -5273427053447369353
+    second: Six-Frame Pixel Character Idle Sprite Sheet_24
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Six-Frame Pixel Character Idle Sprite Sheet_0
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 124
+        width: 300
+        height: 500
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 277bb08fa2cb39b20800000000000000
+      internalID: 3140060257943533426
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Six-Frame Pixel Character Idle Sprite Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 124
+        width: 300
+        height: 500
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a26823ca10a706280800000000000000
+      internalID: -9052101103412148694
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Six-Frame Pixel Character Idle Sprite Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 750
+        y: 124
+        width: 300
+        height: 500
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e72766e6363c85ca0800000000000000
+      internalID: -6027853269414022530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Six-Frame Pixel Character Idle Sprite Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 1100
+        y: 124
+        width: 300
+        height: 500
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af8160e83c34148aa91141e1b2c5ab8f
+      internalID: 742962116826740014
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Six-Frame Pixel Character Idle Sprite Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 1450
+        y: 124
+        width: 300
+        height: 500
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ae30fa1e87d14642bb98db51e33777d
+      internalID: 1999602338953581685
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Six-Frame Pixel Character Idle Sprite Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 1800
+        y: 124
+        width: 300
+        height: 500
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc05a8e92392e455d84216172c9f738b
+      internalID: 4164164330737632580
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: d57cd0ffcfdd34f629bfd5580141c013
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":300.0,"y":500.0},"gridSpriteOffset":{"x":50.0,"y":100.0},"gridSpritePadding":{"x":50.0,"y":0.0},"pivot":{"x":0.5,"y":0.0},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":7,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      Six-Frame Pixel Character Idle Sprite Sheet_0: 3140060257943533426
+      Six-Frame Pixel Character Idle Sprite Sheet_1: -9052101103412148694
+      Six-Frame Pixel Character Idle Sprite Sheet_2: -6027853269414022530
+      Six-Frame Pixel Character Idle Sprite Sheet_3: 742962116826740014
+      Six-Frame Pixel Character Idle Sprite Sheet_4: 1999602338953581685
+      Six-Frame Pixel Character Idle Sprite Sheet_5: 4164164330737632580
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
