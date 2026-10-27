@@ -222,6 +222,8 @@ public class PlayerMovement : MonoBehaviour
                 Quaternion.Euler(0f, 0f, 90f)
             );
 
+            Destroy(droppedSpear, 15f); 
+
             Rigidbody2D spearRb =
                 droppedSpear.GetComponent<Rigidbody2D>();
 
