@@ -24,6 +24,10 @@ public class RunAnimation : MonoBehaviour
     [Min(0.01f)] public float jumpScale = 1f;
     public float jumpHeight = 0f;
 
+    [Header("Boost Animation")]
+    [Min(1f)] public float boostAnimationMultiplier = 2.5f;
+    public PlayerBoost playerBoost;
+
     [Header("Landing Impact")]
     public Sprite impactFrame;
     [Min(0.01f)] public float impactDuration = 0.15f;
@@ -68,10 +72,7 @@ public class RunAnimation : MonoBehaviour
 
         if (characterSprite == null)
         {
-            Debug.LogError(
-                "RunAnimation: No SpriteRenderer found!", this
-            );
-
+            Debug.LogError("RunAnimation: No SpriteRenderer found!", this);
             enabled = false;
             return;
         }
@@ -84,6 +85,12 @@ public class RunAnimation : MonoBehaviour
 
         if (groundChecker == null)
             groundChecker = GetComponent<GroundCheck>();
+
+        if (playerBoost == null)
+            playerBoost = GetComponent<PlayerBoost>();
+
+        if (playerBoost == null)
+            playerBoost = GetComponentInParent<PlayerBoost>();
 
         spriteTransform = characterSprite.transform;
         originalPosition = spriteTransform.localPosition;
@@ -118,7 +125,7 @@ public class RunAnimation : MonoBehaviour
             return;
         }
 
-        // Handle the airborne animation and landing.
+        // Handle jumping and landing.
         if (currentState == AnimationState.Jumping)
         {
             if (grounded && jumpStarted &&
@@ -137,22 +144,19 @@ public class RunAnimation : MonoBehaviour
             return;
         }
 
-        // Play the impact frame for a short duration.
+        // Play the landing impact frame.
         if (currentState == AnimationState.Impact)
         {
             impactTimer += Time.deltaTime;
 
             if (impactTimer >= impactDuration)
-            {
                 ReturnToGroundAnimation();
-            }
 
             wasGrounded = grounded;
             return;
         }
 
-        // Catch a landing if the character becomes grounded
-        // before the jump animation state was entered.
+        // Catch a landing if the jump state was not entered.
         if (!wasGrounded && grounded && jumpStarted)
         {
             jumpStarted = false;
@@ -161,7 +165,7 @@ public class RunAnimation : MonoBehaviour
             return;
         }
 
-        // Select idle or running while on the ground.
+        // Select idle or running.
         AnimationState desiredState = left != right
             ? AnimationState.Running
             : AnimationState.Idle;
@@ -188,8 +192,6 @@ public class RunAnimation : MonoBehaviour
         impactTimer = 0f;
         ChangeAnimation(AnimationState.Impact);
 
-        // If no impact sprite is assigned, skip straight to
-        // the normal grounded animation.
         if (impactFrame == null)
             ReturnToGroundAnimation();
     }
@@ -204,13 +206,20 @@ public class RunAnimation : MonoBehaviour
         ApplyClipSettings();
     }
 
+    // Boosting speeds up the current looping animation.
     void AdvanceLoopingAnimation(Sprite[] frames, float fps)
     {
         if (frames == null || frames.Length == 0)
             return;
 
         timer += Time.deltaTime;
-        float frameDuration = 1f / Mathf.Max(fps, 1f);
+
+        float speedMultiplier = IsBoosting()
+            ? boostAnimationMultiplier
+            : 1f;
+
+        float frameDuration =
+            1f / Mathf.Max(fps * speedMultiplier, 1f);
 
         while (timer >= frameDuration)
         {
@@ -220,6 +229,7 @@ public class RunAnimation : MonoBehaviour
         }
     }
 
+    // Boosting also speeds up the jump animation.
     void AdvanceJumpAnimation()
     {
         if (jumpFrames == null || jumpFrames.Length == 0)
@@ -229,8 +239,14 @@ public class RunAnimation : MonoBehaviour
         if (currentFrame >= jumpFrames.Length - 1)
             return;
 
+        float speedMultiplier = IsBoosting()
+            ? boostAnimationMultiplier
+            : 1f;
+
         timer += Time.deltaTime;
-        float frameDuration = 1f / Mathf.Max(jumpFPS, 1f);
+
+        float frameDuration =
+            1f / Mathf.Max(jumpFPS * speedMultiplier, 1f);
 
         while (timer >= frameDuration &&
                currentFrame < jumpFrames.Length - 1)
@@ -239,6 +255,12 @@ public class RunAnimation : MonoBehaviour
             currentFrame++;
             ShowCurrentFrame();
         }
+    }
+
+    bool IsBoosting()
+    {
+        return playerBoost != null &&
+               playerBoost.IsBoosting();
     }
 
     void ReturnToGroundAnimation()

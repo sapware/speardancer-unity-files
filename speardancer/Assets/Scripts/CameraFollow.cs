@@ -1,54 +1,65 @@
 
 using UnityEngine;
 
-public class CameraFollow : MonoBehaviour
+public class CameraBoundsFollow : MonoBehaviour
 {
+    [Header("Target")]
     public Transform player;
 
-    [Header("Map Boundaries")]
-    public BoxCollider2D leftBoundary;
-    public BoxCollider2D rightBoundary;
-    public BoxCollider2D topBoundary;
-    public BoxCollider2D bottomBoundary;
+    [Header("Camera Bounds")]
+    public BoxCollider2D bounds;
+
+    [Header("Camera Settings")]
+    public float smoothSpeed = 5f;
+    public Vector2 offset = new Vector2(0f, 1f);
 
     private Camera cam;
 
-    void Awake()
+    private void Awake()
     {
         cam = GetComponent<Camera>();
     }
 
-    void LateUpdate()
+    private void LateUpdate()
     {
-        if (player == null || cam == null)
+        if (player == null || bounds == null || cam == null)
             return;
 
+        // Calculate the camera's visible size.
         float halfHeight = cam.orthographicSize;
         float halfWidth = halfHeight * cam.aspect;
 
-        float x = player.position.x;
-        float y = player.position.y;
+        // Get the edges of the level bounds.
+        Bounds level = bounds.bounds;
 
-        // Stop the visible left side at the left map edge.
-        if (leftBoundary != null)
-            x = Mathf.Max(x, leftBoundary.bounds.max.x + halfWidth);
+        // Find the player's desired camera position.
+        Vector3 targetPosition = player.position;
+        targetPosition.x += offset.x;
+        targetPosition.y += offset.y;
 
-        // Stop the visible right side at the right map edge.
-        if (rightBoundary != null)
-            x = Mathf.Min(x, rightBoundary.bounds.min.x - halfWidth);
+        // Stop the camera from showing outside the level.
+        float minX = level.min.x + halfWidth;
+        float maxX = level.max.x - halfWidth;
+        float minY = level.min.y + halfHeight;
+        float maxY = level.max.y - halfHeight;
 
-        // Stop the visible bottom side at the bottom map edge.
-        if (bottomBoundary != null)
-            y = Mathf.Max(y, bottomBoundary.bounds.max.y + halfHeight);
+        // If the level is smaller than the camera view,
+        // keep the camera centred on that axis.
+        targetPosition.x = minX > maxX
+            ? level.center.x
+            : Mathf.Clamp(targetPosition.x, minX, maxX);
 
-        // Stop the visible top side at the top map edge.
-        if (topBoundary != null)
-            y = Mathf.Min(y, topBoundary.bounds.min.y - halfHeight);
+        targetPosition.y = minY > maxY
+            ? level.center.y
+            : Mathf.Clamp(targetPosition.y, minY, maxY);
 
-        transform.position = new Vector3(
-            x,
-            y,
-            transform.position.z
+        targetPosition.z = transform.position.z;
+
+        // Smoothly follow the player within the boundaries.
+        transform.position = Vector3.Lerp(
+            transform.position,
+            targetPosition,
+            smoothSpeed * Time.deltaTime
         );
     }
 }
