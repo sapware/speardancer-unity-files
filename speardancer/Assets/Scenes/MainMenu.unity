@@ -629,7 +629,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0c742602b0dc49f09742e0940c8cf57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MainMenuManager
-  gameplaySceneName: SkyIsland
+  gameplaySceneName: MapTest
 --- !u!1 &1529698467
 GameObject:
   m_ObjectHideFlags: 0
